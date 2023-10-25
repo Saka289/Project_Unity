@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class Boss : MonoBehaviour
 {
+
     public int health;
     public Enemy[] enemies;
     public float spawnOffset;
@@ -14,7 +15,12 @@ public class Boss : MonoBehaviour
 
     public int damage;
 
+    //public GameObject blood;
+    //public GameObject effect;
+
     private Slider healthBar;
+
+    private SceneTransitions sceneTransitions;
 
     private void Start()
     {
@@ -23,6 +29,7 @@ public class Boss : MonoBehaviour
         healthBar = FindObjectOfType<Slider>();
         healthBar.maxValue = health;
         healthBar.value = health;
+        sceneTransitions = FindObjectOfType<SceneTransitions>();
     }
 
     public void TakeDamage(int amount)
@@ -31,15 +38,16 @@ public class Boss : MonoBehaviour
         healthBar.value = health;
         if (health <= 0)
         {
+            //Instantiate(effect, transform.position, Quaternion.identity);
+            //Instantiate(blood, transform.position, Quaternion.identity);
             Destroy(this.gameObject);
             healthBar.gameObject.SetActive(false);
+            sceneTransitions.LoadScene("Win");
         }
-
         if (health <= halfHealth)
         {
             anim.SetTrigger("stage2");
         }
-
         Enemy randomEnemy = enemies[Random.Range(0, enemies.Length)];
         Instantiate(randomEnemy, transform.position + new Vector3(spawnOffset, spawnOffset, 0), transform.rotation);
     }

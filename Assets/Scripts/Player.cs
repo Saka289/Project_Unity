@@ -22,10 +22,13 @@ public class Player : MonoBehaviour
 
     public Animator hurtAnim;
 
+    private SceneTransitions sceneTransitions;
+
     private void Start()
     {
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
+        sceneTransitions = FindObjectOfType<SceneTransitions>();
     }
 
     private void Update()
@@ -57,6 +60,7 @@ public class Player : MonoBehaviour
         if (health <= 0)
         {
             Destroy(gameObject);
+            sceneTransitions.LoadScene("Lose");
         }
     }
     public void ChangeWeapon(Weapon weaponToEquip)
