@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Boss : MonoBehaviour
 {
@@ -13,18 +14,25 @@ public class Boss : MonoBehaviour
 
     public int damage;
 
+    private Slider healthBar;
+
     private void Start()
     {
         halfHealth = health / 2;
         anim = GetComponent<Animator>();
+        healthBar = FindObjectOfType<Slider>();
+        healthBar.maxValue = health;
+        healthBar.value = health;
     }
 
     public void TakeDamage(int amount)
     {
         health -= amount;
+        healthBar.value = health;
         if (health <= 0)
         {
             Destroy(this.gameObject);
+            healthBar.gameObject.SetActive(false);
         }
 
         if (health <= halfHealth)
