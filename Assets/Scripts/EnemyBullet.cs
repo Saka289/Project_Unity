@@ -20,27 +20,54 @@ public class EnemyBullet : MonoBehaviour
     }
 
 
+    //private void Update()
+    //{
+    //    if (Vector2.Distance(transform.position, targetPosition) > .1f)
+    //    {
+    //        Instantiate(effect, transform.position, Quaternion.identity);
+    //        transform.position = Vector2.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
+    //    }
+    //    else
+    //    {
+    //        Destroy(gameObject);
+    //    }
+    //}
+
+
+    //private void OnTriggerEnter2D(Collider2D other)
+    //{
+    //    if (other.tag == "Player")
+    //    {
+    //        playerScript.TakeDamage(damage);
+    //        Destroy(gameObject);
+    //    }
+    //}
     private void Update()
     {
-        if (Vector2.Distance(transform.position, targetPosition) > .1f)
+
+        if ((Vector2)transform.position == targetPosition)
         {
             Instantiate(effect, transform.position, Quaternion.identity);
-            transform.position = Vector2.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
+            Destroy(gameObject);
         }
         else
         {
-            Destroy(gameObject);
+            transform.position = Vector2.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
         }
+
+
     }
 
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+
         if (other.tag == "Player")
         {
             playerScript.TakeDamage(damage);
             Destroy(gameObject);
         }
+
     }
 
 }
